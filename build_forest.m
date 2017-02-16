@@ -12,7 +12,6 @@ fprintf('     Set ntree = %d, mtree = %d \n      ', n_tree, mtree)
 forest = cell(1,n_tree);
 
 
-matlabpool open 4
 ms.UseParallel = 'always';
 
 parfor i = 1:n_tree
@@ -23,7 +22,6 @@ parfor i = 1:n_tree
     if Command==1
         copula=FindCopulaPal3(Y,N);
     elseif Command == 4
-        %copula = FindOtherCopula(Y,N);
         copula=sin((pi/2)*corr(Y,'type', 'kendall'));
     else
         copula=[];
@@ -34,7 +32,6 @@ parfor i = 1:n_tree
     forest{1,i} = feature_threshold_t;
 end
 
-matlabpool close
 
 model.forest = forest;
 model.variable_num = size(Y1,2);

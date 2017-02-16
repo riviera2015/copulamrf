@@ -1,14 +1,12 @@
 function [AAD, CRF,Yactual,Ypred, T_train, T_test] = Main_RF(finalX,finalY,F,FoldedIndex,n_tree,mtree,Column, Command, min_leaf)
 
 finalY=finalY(:,Column);
-[Xtrain,Xtest,Ytrain,Ytest]=CreateFoldedDataRF(finalX,finalY,F,FoldedIndex);
+[Xtrain,Xtest,Ytrain,Ytest]=CreateFoldedDataRF(finalX,finalY,F,FoldedIndex); %% Finding The folded index back
 
 
 if F==0
     F=F+1;
 end
-
-F=1 %Delete
 
 for FF=1:F 
     FF
@@ -37,12 +35,12 @@ for i=1:F
     Ypred=[Ypred;Y_hat{i}];
 end
 
-% In=[];
-% for i=1:F
-%     In=[In FoldedIndex{i}];
-% end
-% Yactual(In,:)=Yactual;
-% Ypred(In,:)=Ypred;
+In=[];
+for i=1:F
+    In=[In FoldedIndex{i}];
+end
+Yactual(In,:)=Yactual;
+Ypred(In,:)=Ypred;
 
 
 CRF=corrcoef(Yactual(:,1),Ypred(:,1));

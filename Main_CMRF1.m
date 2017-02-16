@@ -3,8 +3,6 @@ function [AAD, C1MRF, C2MRF,Yactual,Ypred, model, Alpha, T_train, T_test] = Main
 [Xtrain,Xtest,Ytrain,Ytest]=CreateFoldedDataRF(finalX,finalY,F, FoldedIndex);
 N=20;
 
-%A=[0.2 0.25 0.33 0.5 1 1.5 2.5 5 7.5 10 15 25 50];
-
 if F==0
     F=F+1;
 end
@@ -35,7 +33,6 @@ end
 % Alpha=A(min(find(c==max(c))));
 Alpha=25;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-F=1 %Delete this
 
 for FF=1:F  
     X1=Xtrain{FF};
@@ -63,12 +60,12 @@ parfor i=1:F
     Ypred=[Ypred;Y_hat{i}];
 end
 
-% In=[];
-% for i=1:F
-%     In=[In FoldedIndex{i}];
-% end
-% Yactual(In,:)=Yactual;
-% Ypred(In,:)=Ypred;
+In=[];
+for i=1:F
+    In=[In FoldedIndex{i}];
+end
+Yactual(In,:)=Yactual;
+Ypred(In,:)=Ypred;
 
 
 C1MRF=corrcoef(Yactual(:,1),Ypred(:,1));
